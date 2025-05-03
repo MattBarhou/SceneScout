@@ -105,3 +105,31 @@ export async function getTrendingTVShows() {
     console.log("Trending TV shows fetch failed");
   }
 }
+
+// Top Rated Movies
+export async function getTopRatedMovies() {
+  try {
+    const res = await fetch(
+      `${API_URL}/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`
+    );
+    if (!res.ok) throw new Error("Failed to fetch top-rated movies");
+    const data = await res.json();
+    return data.results;
+  } catch (error) {
+    console.log("Top rated movies fetch failed");
+  }
+}
+
+// Top Rated TV Shows
+export async function getTopRatedTVShows() {
+  try {
+    const res = await fetch(
+      `${API_URL}/tv/top_rated?api_key=${API_KEY}&language=en-US&page=1`
+    );
+    if (!res.ok) throw new Error("Failed to fetch top-rated TV shows");
+    const data = await res.json();
+    return data.results;
+  } catch (error) {
+    console.log("Top rated TV shows fetch failed");
+  }
+}

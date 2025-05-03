@@ -10,7 +10,7 @@ export default function RegularMovieGrid({ mediaType, media }) {
         </div>
         <div className="relative flex justify-center">
           <span className="px-6 py-2 bg-gray-800 rounded-full text-gray-400 text-sm border border-white/10">
-            Trending {mediaType}
+            {mediaType}
           </span>
         </div>
       </div>

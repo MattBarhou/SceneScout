@@ -5,7 +5,7 @@ export default async function Home() {
   const trendingTv = await getTrendingTVShows();
 
   const filteredTv = trendingTv.filter((tv) => tv.poster_path);
-  console.log(filteredTv);
+  //console.log(filteredTv);
 
-  return <RegularMovieGrid mediaType="TV Shows" media={filteredTv} />;
+  return <RegularMovieGrid mediaType="Trending TV" media={filteredTv} />;
 }
