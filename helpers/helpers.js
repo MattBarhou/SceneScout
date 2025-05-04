@@ -2,11 +2,20 @@ const API_URL = "https://api.themoviedb.org/3";
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 export async function getLatestMovies() {
-  const response = await fetch(
-    `${API_URL}/movie/now_playing?api_key=${API_KEY}&language=en-US`
-  );
-  const data = await response.json();
-  return data.results;
+  try {
+    const res = await getPages(
+      `${API_URL}/movie/now_playing?api_key=${API_KEY}&language=en-US`
+    );
+
+    if (!res.ok) {
+      console.log("Latest movies fetch failed");
+      return [];
+    }
+
+    return res;
+  } catch (error) {
+    console.log("Latest movies fetch failed");
+  }
 }
 
 export async function searchMovies(query) {

@@ -7,12 +7,19 @@ export default function HomeMovieGrid({ initialMovies }) {
   const [searchResults, setSearchResults] = useState(null);
 
   // Filter out items without poster_path
-  const filteredInitialMovies = initialMovies.filter(
-    (movie) => movie.poster_path
-  );
-  const filteredSearchResults = searchResults?.filter(
-    (movie) => movie.poster_path
-  );
+  let filteredInitialMovies = [];
+  if (initialMovies && initialMovies.length > 0) {
+    filteredInitialMovies = initialMovies.filter((movie) => movie.poster_path);
+  } else {
+    <p>No movies found</p>;
+  }
+
+  let filteredSearchResults = [];
+  if (searchResults && searchResults.length > 0) {
+    filteredSearchResults = searchResults.filter((movie) => movie.poster_path);
+  } else {
+    <p>No movies found</p>;
+  }
 
   const displayedMovies = filteredSearchResults || filteredInitialMovies;
 
