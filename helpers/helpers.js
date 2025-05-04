@@ -78,15 +78,27 @@ export async function getMediaVideos(id) {
   return []; // Return empty array if both fail
 }
 
+//get pages
+export async function getPages(url) {
+  let allItems = [];
+  try {
+    for (let i = 1; i <= 5; i++) {
+      const res = await fetch(`${url}&page=${i}`);
+      if (!res.ok) throw new Error("Failed to fetch pages");
+      const data = await res.json();
+      allItems.push(...data.results);
+    }
+  } catch (error) {
+    console.log("Failed to fetch pages");
+  }
+  return allItems;
+}
 // Trending Movies
 export async function getTrendingMovies() {
   try {
-    const res = await fetch(
+    return getPages(
       `${API_URL}/trending/movie/week?api_key=${API_KEY}&language=en-US`
     );
-    if (!res.ok) throw new Error("Failed to fetch trending movies");
-    const data = await res.json();
-    return data.results;
   } catch (error) {
     console.log("Trending movies fetch failed");
   }
@@ -95,12 +107,9 @@ export async function getTrendingMovies() {
 // Trending TV Shows
 export async function getTrendingTVShows() {
   try {
-    const res = await fetch(
+    return getPages(
       `${API_URL}/trending/tv/week?api_key=${API_KEY}&language=en-US`
     );
-    if (!res.ok) throw new Error("Failed to fetch trending TV shows");
-    const data = await res.json();
-    return data.results;
   } catch (error) {
     console.log("Trending TV shows fetch failed");
   }
@@ -109,12 +118,9 @@ export async function getTrendingTVShows() {
 // Top Rated Movies
 export async function getTopRatedMovies() {
   try {
-    const res = await fetch(
-      `${API_URL}/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`
+    return getPages(
+      `${API_URL}/movie/top_rated?api_key=${API_KEY}&language=en-US`
     );
-    if (!res.ok) throw new Error("Failed to fetch top-rated movies");
-    const data = await res.json();
-    return data.results;
   } catch (error) {
     console.log("Top rated movies fetch failed");
   }
@@ -123,12 +129,9 @@ export async function getTopRatedMovies() {
 // Top Rated TV Shows
 export async function getTopRatedTVShows() {
   try {
-    const res = await fetch(
-      `${API_URL}/tv/top_rated?api_key=${API_KEY}&language=en-US&page=1`
+    return getPages(
+      `${API_URL}/tv/top_rated?api_key=${API_KEY}&language=en-US`
     );
-    if (!res.ok) throw new Error("Failed to fetch top-rated TV shows");
-    const data = await res.json();
-    return data.results;
   } catch (error) {
     console.log("Top rated TV shows fetch failed");
   }
