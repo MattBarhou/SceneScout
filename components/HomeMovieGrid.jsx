@@ -7,21 +7,16 @@ export default function HomeMovieGrid({ initialMovies }) {
   const [searchResults, setSearchResults] = useState(null);
 
   // Filter out items without poster_path
-  let filteredInitialMovies = [];
-  if (initialMovies && initialMovies.length > 0) {
-    filteredInitialMovies = initialMovies.filter((movie) => movie.poster_path);
-  } else {
-    <p>No movies found</p>;
-  }
+  const filteredInitialMovies =
+    initialMovies?.filter((movie) => movie.poster_path) || [];
 
-  let filteredSearchResults = [];
-  if (searchResults && searchResults.length > 0) {
-    filteredSearchResults = searchResults.filter((movie) => movie.poster_path);
-  } else {
-    <p>No movies found</p>;
-  }
+  const filteredSearchResults =
+    searchResults?.filter((movie) => movie.poster_path) || [];
 
-  const displayedMovies = filteredSearchResults || filteredInitialMovies;
+  const displayedMovies =
+    filteredSearchResults.length > 0
+      ? filteredSearchResults
+      : filteredInitialMovies;
 
   return (
     <div className="relative z-10">
@@ -40,11 +35,15 @@ export default function HomeMovieGrid({ initialMovies }) {
       </div>
 
       {/* Results Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {displayedMovies?.map((movie) => (
-          <MediaInfoCard key={movie.id} movie={movie} />
-        ))}
-      </div>
+      {displayedMovies && displayedMovies.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {displayedMovies?.map((movie) => (
+            <MediaInfoCard key={movie.id} movie={movie} />
+          ))}
+        </div>
+      ) : (
+        <p>No movies found</p>
+      )}
     </div>
   );
 }
